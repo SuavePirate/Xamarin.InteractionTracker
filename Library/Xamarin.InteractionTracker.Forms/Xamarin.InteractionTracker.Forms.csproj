@@ -36,12 +36,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Events\InteractionEventArgs.cs" />
     <Compile Include="ITrackerManager.cs" />
     <Compile Include="Models\GestureType.cs" />
     <Compile Include="Models\UIEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TrackerManager.cs" />
     <Compile Include="TrackerService.cs" />
+    <Compile Include="Views\TrackingContentPage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using Xamarin.InteractionTracker.Forms.Events;
 using Xamarin.InteractionTracker.Forms.Models;
 
 namespace Xamarin.InteractionTracker.Forms
@@ -17,6 +18,8 @@ namespace Xamarin.InteractionTracker.Forms
         public IList<View> ScannedViewsCache { get; }
         public GestureType GesturesTracked { get; }
         public bool IsUsingCache { get; }
+        public event EventHandler<InteractionEventArgs> OnInteractionDetected;
+
         public TrackerManager(GestureType gesturesTracked, bool usingCache)
         {
             GesturesTracked = gesturesTracked;
@@ -28,6 +31,12 @@ namespace Xamarin.InteractionTracker.Forms
             ScannedViewsCache = new List<View>();
         }
 
+        /// <summary>
+        /// Scans a page for views to track interactinos with
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="clearViewCache"></param>
+        /// <param name="includeLayouts"></param>
         public void ScanPage(ContentPage page, bool clearViewCache = false, bool includeLayouts = false)
         {
             if (clearViewCache)
@@ -75,9 +84,13 @@ namespace Xamarin.InteractionTracker.Forms
             }
         }
 
+        /// <summary>
+        /// Tracks an event from an interaction. Adds it to the cache if set, and fires event
+        /// </summary>
+        /// <param name="view"></param>
+        /// <param name="gesture"></param>
         private void TrackEvent(View view, GestureType gesture)
         {
-
             var uiEvent = new UIEvent
             {
                 Gesture = gesture,
@@ -89,7 +102,7 @@ namespace Xamarin.InteractionTracker.Forms
             {
                 EventCache.Add(uiEvent);
             }
-            // TODO: fire event
+            OnInteractionDetected?.Invoke(this, new InteractionEventArgs(uiEvent));
         }
     }
 }

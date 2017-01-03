@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.InteractionTracker.Forms.Events;
+using Xamarin.InteractionTracker.Forms.Models;
 
 namespace Xamarin.InteractionTracker.Forms
 {
@@ -11,5 +13,7 @@ namespace Xamarin.InteractionTracker.Forms
     /// </summary>
     public interface ITrackerManager
     {
+        IList<UIEvent> EventCache { get; }
+        event EventHandler<InteractionEventArgs> OnInteractionDetected;
     }
 }

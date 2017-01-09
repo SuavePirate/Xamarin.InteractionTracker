@@ -12,8 +12,8 @@ namespace Xamarin.InteractionTracker.Forms.Models
     public class UIEvent
     {
         public Guid Id { get; set; }
-        public string ElementName { get; set; }
         public GestureType Gesture { get; set; }
         public DateTime EventTime { get; set; }
+        public object ViewObject { get; set; }
     }
 }

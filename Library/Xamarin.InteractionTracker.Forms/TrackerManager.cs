@@ -44,44 +44,70 @@ namespace Xamarin.InteractionTracker.Forms
                 ScannedViewsCache.Clear();
             }
             var rootView = page.Content;
-
-            if (rootView is Layout<View>)
+            if (rootView is ILayoutController)
             {
-                foreach (var view in ((Layout<View>)rootView).Children)
+                ScanLayout((ILayoutController)rootView, includeLayouts);
+            }
+            else if (!(rootView is Layout))
+            {
+                MonitorView(rootView);
+            }
+        }
+
+        /// <summary>
+        /// Scans a layout view for it's children. If the child view is a layout, it scans those views as well.
+        /// </summary>
+        /// <param name="rootView"></param>
+        /// <param name="includeLayouts"></param>
+        private void ScanLayout(ILayoutController rootView, bool includeLayouts)
+        {
+            foreach (var view in rootView.Children)
+            {
+                if (includeLayouts || !(view is Layout) && view is View)
                 {
-                    if (includeLayouts || !(view is Layout))
-                    {
-                        switch (GesturesTracked)
-                        {
-                            case GestureType.Tap:
-                                view.GestureRecognizers.Add(new TapGestureRecognizer
-                                {
-                                    Command = new Command(() => TrackEvent(view, GestureType.Tap))
-                                });
-                                break;
-                            case GestureType.Pan:
-                                var panGesture = new PanGestureRecognizer();
-                                panGesture.PanUpdated += (s, e) =>
-                                {
-                                    if (e.StatusType == GestureStatus.Completed)
-                                        TrackEvent(view, GestureType.Pan);
-                                };
-                                view.GestureRecognizers.Add(panGesture);
-                                break;
-                            case GestureType.Pinch:
-                                var pinchGesture = new PinchGestureRecognizer();
-                                pinchGesture.PinchUpdated += (s, e) =>
-                                {
-                                    if (e.Status == GestureStatus.Completed)
-                                        TrackEvent(view, GestureType.Pan);
-                                };
-                                view.GestureRecognizers.Add(pinchGesture);
-                                break;
-                        }
-                        ScannedViewsCache.Add(view);
-                    }
+                    MonitorView((View)view);
+                }
+                if(view is Layout<View>)
+                {
+                    ScanLayout((Layout<View>)view, includeLayouts);
                 }
             }
+        }
+
+        /// <summary>
+        /// Adds gesture recognizers to a view and adds it to the view cache
+        /// </summary>
+        /// <param name="view"></param>
+        private void MonitorView(View view)
+        {
+            switch (GesturesTracked)
+            {
+                case GestureType.Tap:
+                    view.GestureRecognizers.Add(new TapGestureRecognizer
+                    {
+                        Command = new Command(() => TrackEvent(view, GestureType.Tap))
+                    });
+                    break;
+                case GestureType.Pan:
+                    var panGesture = new PanGestureRecognizer();
+                    panGesture.PanUpdated += (s, e) =>
+                    {
+                        if (e.StatusType == GestureStatus.Completed)
+                            TrackEvent(view, GestureType.Pan);
+                    };
+                    view.GestureRecognizers.Add(panGesture);
+                    break;
+                case GestureType.Pinch:
+                    var pinchGesture = new PinchGestureRecognizer();
+                    pinchGesture.PinchUpdated += (s, e) =>
+                    {
+                        if (e.Status == GestureStatus.Completed)
+                            TrackEvent(view, GestureType.Pan);
+                    };
+                    view.GestureRecognizers.Add(pinchGesture);
+                    break;
+            }
+            ScannedViewsCache.Add(view);
         }
 
         /// <summary>
@@ -94,9 +120,9 @@ namespace Xamarin.InteractionTracker.Forms
             var uiEvent = new UIEvent
             {
                 Gesture = gesture,
-                ElementName = "temp",
                 Id = Guid.NewGuid(),
-                EventTime = DateTime.UtcNow
+                EventTime = DateTime.UtcNow,
+                ViewObject = view
             };
             if (IsUsingCache)
             {

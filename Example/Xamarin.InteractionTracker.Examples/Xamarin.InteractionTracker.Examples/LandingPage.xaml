@@ -2,11 +2,14 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Xamarin.InteractionTracker.Examples.LandingPage">
-  <StackLayout Orientation="Vertical">
-    <Label x:Name="ALabel" Text="First Label"/>
-    <Button x:Name="AButton" Text="This is a button"/>
-    <Grid x:Name="AGrid" Padding="20">
-      <Label Text="In Grid"/>
-    </Grid>
-  </StackLayout>
+  <ScrollView>
+    <StackLayout Orientation="Vertical" Padding="32">
+      <Label x:Name="ALabel" Text="First Label"/>
+      <Button x:Name="AButton" Text="This is a button"/>
+      <Grid x:Name="AGrid" Padding="20">
+        <Label Text="In Grid"/>
+      </Grid>
+      <Label x:Name="LogLabel" Text="Log:" />
+    </StackLayout>
+  </ScrollView>
 </ContentPage>

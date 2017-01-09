@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using Xamarin.Forms;
+using Xamarin.InteractionTracker.Forms;
 
 namespace Xamarin.InteractionTracker.Examples
 {
@@ -14,6 +15,7 @@ namespace Xamarin.InteractionTracker.Examples
             InitializeComponent();
 
             MainPage = new LandingPage();
+            TrackerService.Init();
         }
 
         protected override void OnStart()

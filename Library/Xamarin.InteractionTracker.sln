@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.InteractionTracker.Forms", "Xamarin.InteractionTracker.Forms.csproj", "{A87F640E-3CD8-4767-8A03-1558695FCCC0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.InteractionTracker.Forms", "Xamarin.InteractionTracker.Forms\Xamarin.InteractionTracker.Forms.csproj", "{A87F640E-3CD8-4767-8A03-1558695FCCC0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

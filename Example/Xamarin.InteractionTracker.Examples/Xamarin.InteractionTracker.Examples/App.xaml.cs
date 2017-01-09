@@ -13,7 +13,7 @@ namespace Xamarin.InteractionTracker.Examples
         {
             InitializeComponent();
 
-            MainPage = new Xamarin.InteractionTracker.Examples.MainPage();
+            MainPage = new LandingPage();
         }
 
         protected override void OnStart()

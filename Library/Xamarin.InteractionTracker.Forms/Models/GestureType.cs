@@ -13,6 +13,7 @@ namespace Xamarin.InteractionTracker.Forms.Models
     {
         Tap,
         Pan,
-        Pinch
+        Pinch,
+        All
     }
 }

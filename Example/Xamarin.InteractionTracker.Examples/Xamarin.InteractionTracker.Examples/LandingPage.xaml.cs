@@ -32,12 +32,13 @@ namespace Xamarin.InteractionTracker.Examples
         private void Current_OnInteractionDetected(object sender, Forms.Events.InteractionEventArgs e)
         {
             
-            //var objectData = JsonConvert.SerializeObject(e.Interaction.ViewObject, Formatting.Indented, new JsonSerializerSettings
-            //{
-            //    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-            //    PreserveReferencesHandling = PreserveReferencesHandling.None
-            //});
-            //LogLabel.Text += $"\n Event tracked: {e.Interaction.EventTime} | {e.Interaction.Gesture}: \n {objectData}";
+            var objectData = JsonConvert.SerializeObject(e.Interaction.ViewObject, Formatting.Indented, new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                PreserveReferencesHandling = PreserveReferencesHandling.None,
+                ContractResolver = new WritablePropertiesResolver(new List<string>() { "Parent", "Children", "BindingContext" })
+            });
+            LogLabel.Text += $"\n Event tracked: {e.Interaction.EventTime} | {e.Interaction.Gesture}: \n {objectData}";
         }
     }
 }

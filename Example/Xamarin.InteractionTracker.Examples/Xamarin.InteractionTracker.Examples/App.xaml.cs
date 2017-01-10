@@ -5,6 +5,7 @@ using System.Text;
 
 using Xamarin.Forms;
 using Xamarin.InteractionTracker.Forms;
+using Xamarin.InteractionTracker.Forms.Models;
 
 namespace Xamarin.InteractionTracker.Examples
 {
@@ -15,7 +16,7 @@ namespace Xamarin.InteractionTracker.Examples
             InitializeComponent();
 
             MainPage = new LandingPage();
-            TrackerService.Init();
+            TrackerService.Init(GestureType.All, true);
         }
 
         protected override void OnStart()

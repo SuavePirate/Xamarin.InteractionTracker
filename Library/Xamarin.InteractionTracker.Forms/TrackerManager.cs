@@ -106,6 +106,27 @@ namespace Xamarin.InteractionTracker.Forms
                     };
                     view.GestureRecognizers.Add(pinchGesture);
                     break;
+                case GestureType.All:
+                default:
+                    view.GestureRecognizers.Add(new TapGestureRecognizer
+                    {
+                        Command = new Command(() => TrackEvent(view, GestureType.Tap))
+                    });
+                    var panGestureAll = new PanGestureRecognizer();
+                    panGestureAll.PanUpdated += (s, e) =>
+                    {
+                        if (e.StatusType == GestureStatus.Completed)
+                            TrackEvent(view, GestureType.Pan);
+                    };
+                    view.GestureRecognizers.Add(panGestureAll);
+                    var pinchGestureAll = new PinchGestureRecognizer();
+                    pinchGestureAll.PinchUpdated += (s, e) =>
+                    {
+                        if (e.Status == GestureStatus.Completed)
+                            TrackEvent(view, GestureType.Pan);
+                    };
+                    view.GestureRecognizers.Add(pinchGestureAll);
+                    break;
             }
             ScannedViewsCache.Add(view);
         }
